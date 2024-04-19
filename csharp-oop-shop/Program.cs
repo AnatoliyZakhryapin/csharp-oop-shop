@@ -1,4 +1,5 @@
-﻿using static csharp_oop_shop.Program;
+﻿using System.Globalization;
+using static csharp_oop_shop.Program;
 
 namespace csharp_oop_shop
 {
@@ -16,13 +17,28 @@ namespace csharp_oop_shop
             product1.PrintBaseInformation();
             product1.PrintPriceWithVat();
             product1.PrintNameExtended();
+            Console.WriteLine($"ProductCode padded: {product1.GetPaddedProductCode()}");
 
             Product product2 = new Product("Mela", "Una frutta", -200M, 10);
 
             product2.PrintBaseInformation();
             product2.PrintPriceWithVat();
             product2.PrintNameExtended();
+            Console.WriteLine($"ProductCode padded: {product2.GetPaddedProductCode()}");
 
+            Product[] products = { 
+                new Product("Pasta", "Scatola da 1 kg", 1.55m, 22),
+                new Product("Olio", "Bottiglia da 1 litro", 10.99m, 22),
+                new Product("Gelato", "Scatola da 0.5 kg", 5m, 22),
+            };
+
+            foreach (Product product in products)
+            {
+                product.PrintBaseInformation();
+                product.PrintPriceWithVat();
+                product.PrintNameExtended();
+                Console.WriteLine($"ProductCode padded: {product.GetPaddedProductCode()}");
+            }
         }
 
         public class Product
@@ -74,20 +90,6 @@ namespace csharp_oop_shop
                 set { vat = SetVat(value); }
             }
 
-            public decimal GetPriceWithVat()
-            {
-                decimal result = (this.price * ((decimal)this.Vat / 100 )) + this.price;
-
-                return decimal.Parse(result.ToString("0.00"));
-            }
-
-            public string GetNameExtended()
-            {
-                string result = this.productCode + this.Name;
-
-                return result;
-            }
-
             // --------
             // Funzioni
             // --------
@@ -113,6 +115,20 @@ namespace csharp_oop_shop
                 Console.WriteLine($"Name extended: {GetNameExtended()}");
             }
 
+            public decimal GetPriceWithVat()
+            {
+                decimal result = (this.price * ((decimal)this.Vat / 100)) + this.price;
+
+                return decimal.Parse(result.ToString("0.00"));
+            }
+
+            public string GetNameExtended()
+            {
+                string result = this.productCode + this.Name;
+
+                return result;
+            }
+
             private int SetVat(int vat)
             {
                 if (Math.Abs(vat) > 0 && Math.Abs(vat) < 100)
@@ -124,6 +140,13 @@ namespace csharp_oop_shop
                     Console.WriteLine("Vat non è corretto");
                     return 0;
                 }
+            }
+
+            public string GetPaddedProductCode()
+            {
+                string paddedCode = this.productCode.ToString().PadLeft(8, '0');
+
+                return paddedCode;
             }
         }
     }
