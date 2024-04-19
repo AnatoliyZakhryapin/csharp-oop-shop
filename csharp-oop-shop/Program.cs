@@ -5,6 +5,12 @@
         static void Main(string[] args)
         {
 
+            Product product1 = new Product();
+            product1.Name = "Banana";
+            product1.Description = "Una fruta";
+            product1.Price = 2.222M;
+            product1.Vat = "sDFSDfsd";
+
         }
 
         public class Product
