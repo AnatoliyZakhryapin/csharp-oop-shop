@@ -7,37 +7,90 @@ namespace csharp_oop_shop
     {
         static void Main(string[] args)
         {
-
-            Product product1 = new Product();
-            product1.Name = "Banana";
-            product1.Description = "Una fruta";
-            product1.Price = -100.00M;
-
-
-            product1.PrintBaseInformation();
-            product1.PrintPriceWithVat();
-            product1.PrintNameExtended();
-            Console.WriteLine($"ProductCode padded: {product1.GetPaddedProductCode()}");
-
-            Product product2 = new Product("Mela", "Una frutta", -200M, 10);
-
-            product2.PrintBaseInformation();
-            product2.PrintPriceWithVat();
-            product2.PrintNameExtended();
-            Console.WriteLine($"ProductCode padded: {product2.GetPaddedProductCode()}");
-
-            Product[] products = { 
+            Product[] products = {
                 new Product("Pasta", "Scatola da 1 kg", 1.55m, 22),
                 new Product("Olio", "Bottiglia da 1 litro", 10.99m, 22),
                 new Product("Gelato", "Scatola da 0.5 kg", 5m, 22),
             };
 
-            foreach (Product product in products)
+            while (true)
             {
-                product.PrintBaseInformation();
-                product.PrintPriceWithVat();
-                product.PrintNameExtended();
-                Console.WriteLine($"ProductCode padded: {product.GetPaddedProductCode()}");
+                Console.WriteLine();
+                Console.WriteLine("Seleziona opzione:");
+                Console.WriteLine();
+                Console.WriteLine("1. Voglio creare i prodotti per negozio");
+                Console.WriteLine("2. Voglio guardare la lista dei prodotti del negozio");
+                Console.WriteLine();
+                Console.WriteLine("0. Esci");
+
+                // Prendiamo l'input dell'utente
+                Console.WriteLine();
+                string input = Console.ReadLine();
+
+                // Converte l'input in un numero intero
+                if (int.TryParse(input, out int choice))
+                {
+                    switch (choice)
+                    {
+                        case 0:
+                            // Uscita dal programma
+                            return;
+                        case 1:
+                            CreateProductsList();
+                            break;
+                        case 2:
+                            ShowProductsList(products);
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Input non valido. Riprova.");
+                }
+            }
+        }
+
+        public static void CreateProductsList()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Crea lista dei prodotti");
+        }
+
+        public static void ShowProductsList(Product[] products)
+        {
+            while (true)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Stampa lista dei prodotti");
+
+                foreach (Product product in products)
+                {
+                    product.PrintBaseInformation();
+                    product.PrintPriceWithVat();
+                    product.PrintNameExtended();
+                    Console.WriteLine($"ProductCode padded: {product.GetPaddedProductCode()}");
+                }
+
+                while (true)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Vuoi tornare al menu precedente? (S/N)");
+                    Console.WriteLine();
+                    string input = Console.ReadLine();
+
+                    if (input.ToUpper() == "S")
+                    {
+                        return; // Ritorna al menu precedente
+                    }
+                    else if (input.ToUpper() == "N")
+                    {
+                        continue; // Continua a visualizzare la lista dei prodotti
+                    }
+                    else
+                    {
+                        Console.WriteLine("Input non valido. Riprova.");
+                    }
+                }
             }
         }
 
